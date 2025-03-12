@@ -1,24 +1,59 @@
-# CSCI271_Project
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
-CSCI 271: Simple Blackjack Game 🎲🃏
+using namespace std;
 
-This project was developed as part of CSCI 271 alongside two classmates. It is a simple command-line Blackjack game written in C++, featuring basic gameplay mechanics such as card dealing, hitting, and bust detection.
+int main() {
+    srand(time(0)); // Creates the random number generator
 
-📌 Project Overview
-	•	Course: CSCI 271
-	•	Team Size: 3 members
-	•	Objective: Implement a simple text-based Blackjack game using fundamental C++ programming concepts.
+    char playAgain = 'y';
 
-🎮 How It Works
-	•	The player is dealt a random starting hand.
-	•	They can hit (h) to draw another card or stand (s) to hold their total.
-	•	If the hand exceeds 21, the player busts and loses.
-	•	The game loops until the player chooses to stop.
+    while (playAgain == 'y') {
+        // Gives player one a starting number
+        int playerHand = 0;
 
-🛠️ Technologies Used
-	•	C++ (Standard Library)
-	•	Randomization with rand()
+        // Deals initial cards which is limited to 10
+        playerHand += (rand() % 10) + 1;  // First card 1-10
 
-🔚 Status
 
-This project was completed for CSCI 271 and is no longer being actively developed.**
+        // Game loop
+        bool playerTurn = true;
+        while (playerTurn) {
+            // Player's turn
+            cout << "Your hand: " << playerHand << endl;
+            if (playerHand < 21) {
+                char choice;
+                cout << "Hit or Stand (h/s)? ";
+                cin >> choice;
+                if (choice == 'h') {
+                    playerHand += (rand() % 10) + 1;  // New card 1-10
+                    if (playerHand > 21) {
+                        cout << "You Bust!" << endl;
+                        playerTurn = false;
+                    }
+                } else {
+                    playerTurn = false;
+                }
+            } else {
+                playerTurn = false;
+            }
+        }
+
+        // Determines the winner
+        cout << "Final Hand:" << endl;
+        cout << "You: " << playerHand << endl;
+
+        if (playerHand > 21) {
+            cout << "You Bust! You lose!" << endl;
+        } else {
+            cout << "You win!" << endl;
+        }
+
+        cout << "Play again? (y/n): ";
+        cin >> playAgain;
+    }
+
+    return 0;
+
+}****
